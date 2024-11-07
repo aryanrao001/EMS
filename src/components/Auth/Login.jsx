@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Login = () => {
 
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
+
     const submitHandller = (e) => {
         e.preventDefault()
-        console.log("Hello guys form Submitted ")
+        console.log("email is ", email)
+        console.log("password is ", password )
 
+        setemail("");
+        setpassword("");
     }
 
     return(
@@ -18,9 +24,19 @@ const Login = () => {
                         submitHandller(e)
                     }}
                     className=' items-center h-[80%] flex flex-col justify-evenly' >
-                        <input required className='border-2 text-wh outlinne-none bg-transparent border-emerald-600 py-3 text-xl px-5 rounded-full  placeholder:text-white ' type="email" placeholder='Enter Your Email' ></input>
-                        <input required className='border-2 text-wh outlinne-none bg-transparent border-emerald-600 py-3 text-xl px-5 rounded-full  placeholder:text-white ' type="password" placeholder='Enter Your password ' ></input>
-                        <button className='border-2 text-wh outlinne-none bg-transparent border-none bg-emerald-500 py-2 text-xl px-7  rounded-full placeholder:text-white w-full '>Login</button>
+                        <input
+                        value={email}
+                        onChange={(e) =>{
+                            setemail(e.target.value);
+                        }}
+                        required className='border-2 text-wh outlinne-none bg-transparent border-emerald-600 py-3 text-xl px-5 rounded-full  placeholder:text-white ' type="email" placeholder='Enter Your Email' ></input>
+                        <input
+                        value={password}
+                        onChange={(e) =>{
+                            setpassword(e.target.value);
+                        }}
+                        required className='border-2 text-wh outlinne-none bg-transparent border-emerald-600 py-3 text-xl px-5 rounded-full  placeholder:text-white ' type="password" placeholder='Enter Your password ' ></input>
+                        <button className='border-2 text-wh outlinne-none bg-transparent border-none bg-emerald-700 py-2 text-xl px-7  rounded-full placeholder:text-white w-full '>Login</button>
                     </form>
                 </div>
             </div>
