@@ -15,4 +15,4 @@ const EmployeeDashboard = ({data}) => {
   )
 }
 
-export default EmployeeDashboard
+export default EmployeeDashboard;

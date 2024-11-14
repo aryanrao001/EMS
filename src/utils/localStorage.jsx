@@ -15,7 +15,7 @@ const employees = [
       },
       tasks: [
           {
-              active: true,
+              active: true, 
               newTask: true,
               completed: false,
               failed: false,
@@ -143,11 +143,11 @@ const employees = [
       ]
   }
 ];  
-const admin = {
+const admin = [{
   id: 1,
   email: "admin@me.com",
   password: "123"
-};
+}];
   
 export const setLocalStorage = () => {
     localStorage.setItem('employees',JSON.stringify(employees));

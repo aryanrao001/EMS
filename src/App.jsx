@@ -4,14 +4,23 @@ import EmployeeDashboard from './components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
 import { AuthContext } from './context/AuthProvider'
 
-// import { getLocalStorage, setLocalStorage } from './utils/localStorage'
-
 
 const App = () => {
 
     const [user, setUser] = useState('');
     const [LoggedInUserData, setLoggedInUserData] = useState(null)
     const authData = useContext(AuthContext);   //For Using Context Api 
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem('loggedInUser','');
+        if(loggedInUser){
+            const userData = JSON.parse(loggedInUser);
+            setUser(userData.role);
+            setLoggedInUserData(userData.data)
+        }
+      
+    }, [])
+    
 
     // useEffect(() => {
     //   if(authData){
@@ -32,17 +41,18 @@ const App = () => {
             if(employee){
                 setUser('employee')
                 setLoggedInUserData(employee);
-                localStorage.setItem('loggedInUser',JSON.stringify({role : 'employee'}));
+                localStorage.setItem('loggedInUser',JSON.stringify({role : 'employee',data:employee}));
             }
         }else{
             alert("Invalid Credentials ");
         }
+
     }
 
     return(
        <>
         {!user ? <Login handleLogin={handleLogin} /> : ''}
-        {user == 'admin' ? <AdminDashboard/> : (user == 'employee' ? <EmployeeDashboard data={LoggedInUserData}/> : <AdminDashboard/> ) }
+        {user == 'admin' ? <AdminDashboard/> : (user == 'employee' ? <EmployeeDashboard data={LoggedInUserData} /> : null ) }
        </>
     )      
 }
