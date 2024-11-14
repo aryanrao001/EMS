@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import NewTask from '../TaskList/NewTask';
+import { AuthContext } from '../../context/AuthProvider';
 
 const CreateTask = () => {
 
-    const [taskTitle, setTaskTitle] = useState('');
-    const [taskDescription, setTaskDescription] = useState('')
-    const [taskDate, setTaskDate] = useState('')
+    const [userData,setUserData] =   useContext(AuthContext);
+
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('')
+    const [date, setDate] = useState('')
     const [assignTo, setAssignTo] = useState('')
     const [category, setCategory] = useState('')
 
@@ -15,23 +19,26 @@ const CreateTask = () => {
         e.preventDefault();
         // console.log(taskTitle,taskDate,taskDescription,category,assignTo)
 
-        setNewTask({taskTitle,taskDescription,taskDate,category,active:false,NewTask:true,failed:false,completed:false,});
+        setNewTask({title,description,date,category,active:false,NewTask:true,failed:false,completed:false,});
 
-        const data = JSON.parse(localStorage.getItem('employees'));
-        data.forEach(function(elem){
+        const data = userData;
+        // console.log(data) 
+
+          data.forEach(function(elem){
             if(assignTo === elem.firstName){
                 elem.tasks.push(newTask);
                 elem.taskNumber.newTask = elem.taskNumber.newTask+1;
-                console.log(elem)
             }
             
         });
+        setUserData(data)
         console.log(data)
-        localStorage.setItem('employees',JSON.stringify(data))
+        // console.log(data)
+        // localStorage.setItem('employees',JSON.stringify(data))
 
-        setTaskTitle('');
-        setTaskDescription('');
-        setTaskDate('');
+        setTitle('');
+        setDescription('');
+        setDate('');
         setAssignTo('');
         setCategory('');
 
@@ -48,16 +55,16 @@ const CreateTask = () => {
                 type='text'
                 className='px-8 py-2 w-1/2 rounded-3xl my-2 bg-transparent border-emerald-400 border-x-4  '
                 placeholder='Make a UI Design'
-                value={taskTitle}
+                value={title}
                 onChange={(e)=>{
-                    setTaskTitle(e.target.value)
+                    setTitle(e.target.value)
                 }}
                 />
                 <h3 className='text-2xl font-semibold'  >Date</h3>
                 <input
-                value={taskDate}
+                value={date}
                 onChange={(e)=>{
-                    setTaskDate(e.target.value)
+                    setDate(e.target.value)
                 }}
                 type="date"
                 className='px-8 py-2 w-1/2 rounded-3xl my-2 bg-transparent border-emerald-400  border-x-4   ' />
@@ -83,9 +90,9 @@ const CreateTask = () => {
             <div className='w-1/2' >
                 <h3 className='text-2xl font-bold my-4' >Description </h3>
                 <textarea
-                 value={taskDescription}
+                 value={description}
                  onChange={(e)=>{
-                    setTaskDescription(e.target.value)
+                    setDescription(e.target.value)
                  }}
                  className='w-full border-gray-700 border bg-transparent '  name='' id='' cols="30" rows="10" ></textarea>
                 <div className='flex items-center justify-center  ' ><button className='px-8 py-2  rounded-3xl my-2 bg-transparent border-emerald-400 bg-emerald-600 border-2 mt-9  '  > Create Task   </button> </div>
